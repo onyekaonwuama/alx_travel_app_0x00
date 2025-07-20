@@ -1,16 +1,21 @@
+import os
 import environ
 from pathlib import Path
-
-# Initialize environment variables
-env = environ.Env(
-    DEBUG=(bool, False)
-)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Take environment variables from .env file
-environ.Env.read_env(BASE_DIR / '.env')
+# Initialise environment variables
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+# Read .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+print(f"BASE_DIR is: {BASE_DIR}")
+print(f".env file path: {os.path.join(BASE_DIR, '.env')}")
+print(f"SECRET_KEY loaded: {env('SECRET_KEY', default='NOT SET')}")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
